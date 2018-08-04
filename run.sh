@@ -1,7 +1,7 @@
 cd ../bin
 make
 cd ../diarization
-# ./diarization
+./diarization
 
 for j in $(ls result_rttm); do
 	cat result_rttm/$j;
