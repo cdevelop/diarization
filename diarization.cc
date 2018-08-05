@@ -326,7 +326,7 @@ int main(int argc, char *argv[])
 	mfcc_opts.frame_opts.snip_edges = false;
 
 	VadEnergyOptions vad_opts;
-	vad_opts.vad_energy_threshold = 5;  // original: 9
+	vad_opts.vad_energy_threshold = 6;  // original: 9
 	vad_opts.vad_energy_mean_scale = 0.5;
 	vad_opts.vad_frames_context = 7;
 
