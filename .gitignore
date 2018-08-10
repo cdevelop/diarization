@@ -1,7 +1,9 @@
 DER.txt*
 diarization
 log.txt
+launch.json
 result.rttm
 result.mdtm
 result_rttm/
 result_mdtm/
+result_wav/

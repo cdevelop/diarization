@@ -12,3 +12,5 @@ for j in $(ls result_mdtm); do
 done > result.mdtm
 
 ./md-eval.pl -1 -c 0.25 -r ref.rttm -s 2>log.txt result.rttm > DER.txt
+
+python split_wav.py
