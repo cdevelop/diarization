@@ -1,9 +1,11 @@
 import os
+from tqdm import tqdm
 import numpy as np
 
-wav_scp = open('wav.scp')
+print("Start spliting wav...")
 
-for wav_pos in wav_scp.readlines():
+wav_scp = open('wav.scp')
+for wav_pos in tqdm(wav_scp.readlines()):
     name, pos = wav_pos.split()
     wavfile = open(pos, 'rb')
     binary_data = np.array(list(wavfile.read()))
