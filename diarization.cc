@@ -315,7 +315,7 @@ void WriteRTTM(std::string name, std::vector<std::pair<BaseFloat, BaseFloat>> va
 	fclose(out);
 }
 
-int main(int argc, char *argv[])
+int diarization(int argc, char *argv[])
 {
 	MfccOptions mfcc_opts;
 	mfcc_opts.num_ceps = 20;
@@ -331,19 +331,19 @@ int main(int argc, char *argv[])
 	vad_opts.vad_frames_context = 7;
 
 	FullGmm fgmm;
-	ReadKaldiObject("final.ubm", &fgmm);
+	ReadKaldiObject("diarization/final.ubm", &fgmm);
 	IvectorExtractor extractor;
-	ReadKaldiObject("final.ie_128", &extractor);
+	ReadKaldiObject("diarization/final.ie_128", &extractor);
 
 	Matrix<BaseFloat> trans_mat;
-	ReadKaldiObject("transform.mat_128_128", &trans_mat);
+	ReadKaldiObject("diarization/transform.mat_128_128", &trans_mat);
 	Vector<BaseFloat> mean_ivector;
-	ReadKaldiObject("mean.vec_128", &mean_ivector);
+	ReadKaldiObject("diarization/mean.vec_128", &mean_ivector);
 
 	Plda plda;
-	ReadKaldiObject("plda_128", &plda);
+	ReadKaldiObject("diarization/plda_128", &plda);
 
-	SequentialTableReader<WaveHolder> wav_reader("scp:wav.scp");
+	SequentialTableReader<WaveHolder> wav_reader("scp:diarization/wav.scp");
 	for(; !wav_reader.Done(); wav_reader.Next())
 	{
 		std::string name = wav_reader.Key();
@@ -389,7 +389,7 @@ int main(int argc, char *argv[])
 		BaseFloat min_cluster = 2;
 		scoremat.Scale(-1);  // costs
 		BaseFloat threshold = 0;
-		AgglomerativeCluster(scoremat, threshold, min_cluster, &spkid);
+		AgglomerativeCluster(scoremat, threshold, min_cluster, std::numeric_limits<int16>::max(),1.0, &spkid);
 
 		WriteMDTM(name, vad_pair, spkid);
 		WriteRTTM(name, vad_pair, spkid);
